@@ -75,9 +75,8 @@
 
     <!-- 접근성 기능 버튼 -->
     <div class="controls">
-      <button class="btn" onclick="changeFontSize(1)">A+</button>
-      <button class="btn" onclick="changeFontSize(-1)">A-</button>
-      <button class="btn" onclick="toggleContrast()">고대비 모드</button>
+      <button class="btn" onclick="changeFontSize(1)">글자크기+</button>
+      <button class="btn" onclick="changeFontSize(-1)">글자크기-</button>
       <button class="btn" onclick="readText()">음성 안내</button>
     </div>
 
@@ -95,7 +94,7 @@
 
     <!-- 도서관 모식도 이미지 -->
     <h2>📍 도서관 모식도</h2>
-    <img src="library-map.jpg" alt="학교 도서관 모식도" class="map">
+    <img src="library-map.png" alt="학교 도서관 모식도" class="map">
   </div>
 
   <script>
@@ -107,10 +106,6 @@
       document.body.style.fontSize = fontSize + 'px';
     }
 
-    // 고대비 모드
-    function toggleContrast() {
-      document.body.classList.toggle('high-contrast');
-    }
 
     // 음성 안내
     function readText() {
