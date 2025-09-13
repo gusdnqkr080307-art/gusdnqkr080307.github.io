@@ -17,6 +17,12 @@
       padding: 30px;
       box-sizing: border-box;
       color: #333;
+      transition: background-color 0.3s, color 0.3s;
+      font-size: 16px;
+    }
+    .high-contrast {
+      background-color: #000;
+      color: #fff;
     }
     .container {
       background: white;
@@ -43,6 +49,9 @@
     .btn:hover {
       background: #312e81;
     }
+    .controls {
+      margin-bottom: 20px;
+    }
     .content {
       margin-top: 20px;
       text-align: left;
@@ -50,12 +59,29 @@
     h2 {
       color: #4f46e5;
     }
+    .map {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>📚 도서관 안내</h1>
     <p>아래 메뉴에서 원하는 안내를 선택하세요.</p>
+
+    <!-- 접근성 기능 버튼 -->
+    <div class="controls">
+      <button class="btn" onclick="changeFontSize(1)">A+</button>
+      <button class="btn" onclick="changeFontSize(-1)">A-</button>
+      <button class="btn" onclick="toggleContrast()">고대비 모드</button>
+      <button class="btn" onclick="readText()">음성 안내</button>
+    </div>
+
+    <!-- 기존 메뉴 -->
     <div>
       <button class="btn" onclick="showPage('callNumber')">청구번호 읽는 법</button>
       <button class="btn" onclick="showPage('loanGuide')">대출·반납 안내</button>
@@ -66,9 +92,35 @@
     <div class="content" id="content">
       <p>도서관을 더 편리하게 이용해 보세요!</p>
     </div>
+
+    <!-- 도서관 모식도 이미지 -->
+    <h2>📍 도서관 모식도</h2>
+    <img src="library-map.jpg" alt="학교 도서관 모식도" class="map">
   </div>
 
   <script>
+    // 글자 크기 조절
+    let fontSize = 16;
+    function changeFontSize(delta) {
+      fontSize += delta;
+      if (fontSize < 12) fontSize = 12;
+      document.body.style.fontSize = fontSize + 'px';
+    }
+
+    // 고대비 모드
+    function toggleContrast() {
+      document.body.classList.toggle('high-contrast');
+    }
+
+    // 음성 안내
+    function readText() {
+      const text = document.getElementById('content').innerText;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ko-KR';
+      speechSynthesis.speak(utterance);
+    }
+
+    // 페이지 내용 변경
     function showPage(page) {
       const contentDiv = document.getElementById('content');
       if (page === 'callNumber') {
@@ -85,7 +137,7 @@
         contentDiv.innerHTML = `
           <h2>대출·반납 안내</h2>
           <ul>
-            <li>학생 1인당 최대 3권까지 대출 가능</li>
+            <li>학생 1인당 최대 5권까지 대출 가능</li>
             <li>대출 기간: 2주</li>
             <li>연장은 1회 가능 (사서 선생님께 문의)</li>
             <li>반납은 도서관 데스크나 반납함을 이용</li>
